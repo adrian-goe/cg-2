@@ -1,5 +1,12 @@
 const fs = require("fs");
-const loader = require("@assemblyscript/loader");
-const imports = { /* imports go here */ };
-const wasmModule = loader.instantiateSync(fs.readFileSync(__dirname + "/build/optimized.wasm"), imports);
-module.exports = wasmModule.exports;
+const compiled = new WebAssembly.Module(fs.readFileSync(__dirname + "/build/optimized.wasm"));
+const imports = {
+    env: {
+        abort(_msg, _file, line, column) {
+            console.error("abort called at index.ts:" + line + ":" + column);
+        }
+    }
+};
+Object.defineProperty(module, "exports", {
+    get: () => new WebAssembly.Instance(compiled, imports).exports
+});
