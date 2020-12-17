@@ -9,3 +9,7 @@ export function cross(byteSize: i32, imageWidth: i32, imageHeight: i32, crossWid
 export function grayscale(byteSize: i32): i32 {
     return Varianz.grayscale(byteSize);
 }
+
+export function isPrime(x: u32): bool {
+    return Prime.isPrime(x);
+}
