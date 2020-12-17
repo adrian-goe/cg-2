@@ -1,0 +1,7 @@
+*.wasm
+*.wasm.map
+*.asm.js
+
+.idea/
+.build/
+node_modules/
