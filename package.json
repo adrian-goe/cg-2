@@ -11,7 +11,7 @@
     "build": "npm run asbuild",
     "asbuild:watch": "onchange -i 'assembly/**/*' -- npm run asbuild",
     "serve-demo": "static-server",
-    "delpoy": "npm run asbuild:optimized  && cp index.html dist/ && cp images.js dist/ && cp style.css dist/"
+    "deploy": "npm run asbuild:optimized  && cp index.html dist/ && cp images.js dist/ && cp style.css dist/"
   },
   "repository": {
     "type": "git",
