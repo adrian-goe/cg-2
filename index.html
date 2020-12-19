@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>AssemblyScript isPrime demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="imageContainer">
+    <div class="original">
+        <h2>Original</h2>
+        <canvas id="originalImage" width="512" height="512"></canvas>
+    </div>
+    <div class="processed">
+        <h2>Processed</h2>
+        <canvas id="processedImage" width="512" height="512"></canvas>
+    </div>
+</div>
+<div class="buttons">
+    <button onclick="as.cross()">Draw Cross</button>
+    <button onclick="as.grayscale()">Grayscale</button>
+</div>
+<div class="slideContainer">
+    <div class="sliderBox">
+        <label for="crossRange">Cross Width: <span id="crossRangeValue">2</span>px</label>
+        <input type="range" min="2" max="512" value="2" class="slider" id="crossRange">
+    </div>
+</div>
+<div id="time">&nbsp;</div>
+
+<script src="images.js"></script>
+
+</body>
+</html>
