@@ -13,10 +13,6 @@ export namespace Varianz {
 
             const avg = i32(CONST_R * load<u8>(i) + CONST_G * load<u8>(i + 1) + CONST_B * load<u8>(i + 2));
             Util.fill(writeIndex, avg, avg, avg, 255)
-            /*store<u8>(writeIndex + 0, avg);
-            store<u8>(writeIndex + 1, avg);
-            store<u8>(writeIndex + 2, avg);
-            store<u8>(writeIndex + 3, 255);*/
         }
         return 0;
     }
