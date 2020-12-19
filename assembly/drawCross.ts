@@ -3,8 +3,6 @@
 import {Util, Color} from "./utils"
 
 export namespace Image {
-
-
     export function drawCross(byteSize: i32, imageWidth: i32, imageHeight: i32, crossWidth: i32): i32 {
         const centerWidth: i32 = imageWidth / 2;
         const centerHeight: i32 = imageHeight / 2;
@@ -14,14 +12,12 @@ export namespace Image {
         const crossHeightBeginning: i32 = centerHeight - halfCrossWidth;
         const crossHeightEnding: i32 = centerHeight + halfCrossWidth;
 
-        const pink: Color = new Color(253, 0, 255, 255);
-
         for (let row = 0; row < imageHeight; row++) {
             for (let col = 0; col < imageWidth; col++) {
                 const readIndex = ((row * imageWidth) + (col)) * Util.COLOR_WIDTH;
                 const writeIndex = byteSize + readIndex;
                 if (row > crossHeightBeginning && row < crossHeightEnding || col > crossWidthBeginning && col < crossWidthEnding) {
-                    Util.fill(writeIndex, pink);
+                    Util.fill(writeIndex, 253, 0, 255, 255);
                 } else {
                     Util.copy(readIndex, writeIndex);
                 }
