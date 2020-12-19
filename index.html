@@ -9,22 +9,7 @@
 <script>
 
     const as = {};
-
     const canvas = document.getElementById('originalImage')
-/*    let ctx = document.getElementById('originalImage');
-    if (ctx.getContext) {
-        ctx = ctx.getContext('2d');
-        const img1 = new Image();
-        img1.onload = function () {
-            ctx.drawImage(img1, 0, 0);
-        }
-        img1.src = './assets/test-image.png';
-
-        const imageData = ctx.getImageData(0, 0, 512, 512);
-        console.log(imageData)
-        console.log(imageData.data)
-    }*/
-
     const width = canvas.width;
     const height = canvas.height;
 
@@ -36,7 +21,7 @@
 
     run()
 
-    async function drawCanvas(){
+    async function drawCanvas() {
         const img = await loadImage();
         const ctx = canvas.getContext("2d");
         drawImage(canvas, ctx, img);
@@ -50,72 +35,64 @@
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
     }
 
-    async function loadImage(){
+    async function loadImage() {
         return new Promise(resolve => {
             const img = new Image();
             img.src = './assets/test-image.png';
-            img.onload = function() { resolve(this) };
+            img.onload = function () {
+                resolve(this)
+            };
         });
     }
-
 
     async function setupAsTransforms(ctx, imageData) {
         const data = imageData.data;
         const byteSize = data.length;
         const initial = 2 * (((byteSize + 0xffff) & ~0xffff) >>> 16);
-        const memory = new WebAssembly.Memory({initial});
-        const importObject = {env: {memory, abort: () => console.log("Abort!")}};
+        const maximum = 5 * (((byteSize + 0xffff) & ~0xffff) >>> 16);
+        const memory = new WebAssembly.Memory({initial, maximum, shared: true});
+        const importObject = {
+            env: {memory, abort: () => console.log("Abort!")}
+        };
         let module;
-/*        module = await WebAssembly.instantiate(
-            await (await fetch("./build/optimized.wasm")).arrayBuffer(),
-            importObject
-        );*/
-        if (typeof WebAssembly.instantiateStreaming !== 'undefined') {
-            // for Chrome & Firefox
+        module = await fetch('./build/untouched.wasm').then(response =>
+            response.arrayBuffer()
+        ).then(bytes =>
+            WebAssembly.instantiate(bytes, importObject)
+        );
 
-            module = await WebAssembly.instantiateStreaming(
-                fetch("./build/optimized.wasm"),
-                importObject
-            );
-        } else {
-            // for Safari
-            module = await WebAssembly.instantiate(
-                await (await fetch("./build/optimized.wasm")).arrayBuffer(),
-                importObject
-            );
-        }
         const {instance} = module;
-
         const mem = new Uint8Array(memory.buffer);
+
         Object.assign(as, {
             cross: as_transform("cross", imageData, ctx, mem, instance),
-            /*  grayscale: as_transform("grayscale", imageData, ctx, mem, instance),
-              sepia: as_transform("sepia", imageData, ctx, mem, instance),
-              convolve: as_transform("convolve", imageData, ctx, mem, instance),*/
         });
     }
 
-    function as_transform(fn, imageData, ctx, mem, instance) {
+    function as_transform(fn, imageData, ctx, memory, instance) {
         return (...args) => {
             //retrieve image pixels (4 bytes per pixel: RBGA)
             const data = imageData.data;
+            console.log('data', data)
+
+            const savedData = data
             //copy to bytes to shared memory
-            mem.set(data);
+            memory.set(data);
 
             //invoque 'fn'  Wasm filter. We need to inform of the image byte size
             const byteSize = data.length;
+            const crossWidth = 10;
             let time = performance.now();
-            instance.exports[fn](byteSize, imageData.width, imageData.height, ...args);
-            logTime(`AS_${fn}`, time);
+            console.log('hier',byteSize)
+            instance.exports[fn](byteSize, imageData.width, imageData.height, crossWidth, ...args);
+            console.log('hier2')
 
             //copy the response from the shared memory into the canvas imageData
-            data.set(mem.subarray(byteSize, 2 * byteSize));
+            data.set(memory.subarray(byteSize, 2 * byteSize));
             ctx.putImageData(imageData, 0, 0);
         }
     }
 </script>
-<!--<script src="demo.js"></script>-->
-<!--<script src="images.js"></script>-->
 
 </body>
 </html>
