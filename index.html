@@ -1,98 +1,33 @@
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8"/>
     <title>AssemblyScript isPrime demo</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<canvas id="originalImage" width="512" height="512"></canvas>
-<button onclick="as.cross()">Draw Cross</button>
-<script>
+<div class="imageContainer">
+    <div class="original">
+        <h2>Original</h2>
+        <canvas id="originalImage" width="512" height="512"></canvas>
+    </div>
+    <div class="processed">
+        <h2>Processed</h2>
+        <canvas id="processedImage" width="512" height="512"></canvas>
+    </div>
+</div>
+<div class="buttons">
+    <button onclick="as.cross()">Draw Cross</button>
+    <button onclick="as.grayscale()">Grayscale</button>
+</div>
+<div class="slideContainer">
+    <div class="sliderBox">
+        <label for="crossRange">Cross Width: <span id="crossRangeValue">2</span>px</label>
+        <input type="range" min="2" max="512" value="2" class="slider" id="crossRange">
+    </div>
+</div>
+<div id="time">&nbsp;</div>
 
-    const as = {};
-    const canvas = document.getElementById('originalImage')
-    const width = canvas.width;
-    const height = canvas.height;
-
-    async function run() {
-        const ctx = await drawCanvas();
-        const imageData = ctx.getImageData(0, 0, width, height);
-        await setupAsTransforms(ctx, imageData)
-    }
-
-    run()
-
-    async function drawCanvas() {
-        const img = await loadImage();
-        const ctx = canvas.getContext("2d");
-        drawImage(canvas, ctx, img);
-        return ctx;
-    }
-
-    function drawImage(canvas, ctx, img) {
-        const scale = Math.max(width / img.width, height / img.height);
-        const x = (width / 2) - (img.width / 2) * scale;
-        const y = (height / 2) - (img.height / 2) * scale;
-        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-    }
-
-    async function loadImage() {
-        return new Promise(resolve => {
-            const img = new Image();
-            img.src = './assets/test-image.png';
-            img.onload = function () {
-                resolve(this)
-            };
-        });
-    }
-
-    async function setupAsTransforms(ctx, imageData) {
-        const data = imageData.data;
-        const byteSize = data.length;
-        const initial = 2 * (((byteSize + 0xffff) & ~0xffff) >>> 16);
-        const maximum = 5 * (((byteSize + 0xffff) & ~0xffff) >>> 16);
-        const memory = new WebAssembly.Memory({initial, maximum, shared: true});
-        const importObject = {
-            env: {memory, abort: () => console.log("Abort!")}
-        };
-        let module;
-        module = await fetch('./build/untouched.wasm').then(response =>
-            response.arrayBuffer()
-        ).then(bytes =>
-            WebAssembly.instantiate(bytes, importObject)
-        );
-
-        const {instance} = module;
-        const mem = new Uint8Array(memory.buffer);
-
-        Object.assign(as, {
-            cross: as_transform("cross", imageData, ctx, mem, instance),
-        });
-    }
-
-    function as_transform(fn, imageData, ctx, memory, instance) {
-        return (...args) => {
-            //retrieve image pixels (4 bytes per pixel: RBGA)
-            const data = imageData.data;
-            console.log('data', data)
-
-            const savedData = data
-            //copy to bytes to shared memory
-            memory.set(data);
-
-            //invoque 'fn'  Wasm filter. We need to inform of the image byte size
-            const byteSize = data.length;
-            const crossWidth = 10;
-            let time = performance.now();
-            console.log('hier',byteSize)
-            instance.exports[fn](byteSize, imageData.width, imageData.height, crossWidth, ...args);
-            console.log('hier2')
-
-            //copy the response from the shared memory into the canvas imageData
-            data.set(memory.subarray(byteSize, 2 * byteSize));
-            ctx.putImageData(imageData, 0, 0);
-        }
-    }
-</script>
+<script src="images.js"></script>
 
 </body>
 </html>
