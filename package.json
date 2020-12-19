@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "node tests",
-    "asbuild:untouched": "asc assembly/index.ts -b build/untouched.wasm -t build/untouched.wat --sourceMap --debug --runtime none --importMemory",
-    "asbuild:optimized": "asc assembly/index.ts -b build/optimized.wasm -t build/optimized.wat --sourceMap --optimize  --runtime none --importMemory",
+    "asbuild:untouched": "asc assembly/index.ts -b dist/untouched.wasm -t dist/untouched.wat --sourceMap --debug --runtime none --importMemory",
+    "asbuild:optimized": "asc assembly/index.ts -b dist/optimized.wasm -t dist/optimized.wat --sourceMap --optimize  --runtime none --importMemory",
     "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized",
     "build": "npm run asbuild",
     "asbuild:watch": "onchange -i 'assembly/**/*' -- npm run asbuild",
-    "serve-demo": "static-server"
+    "serve-demo": "static-server",
+    "delpoy": "npm run asbuild:optimized  && cp index.html dist/ && cp images.js dist/ && cp style.css dist/"
   },
   "repository": {
     "type": "git",
