@@ -29,5 +29,9 @@
     "assemblyscript": "^0.17.8",
     "onchange": "^7.1.0",
     "static-server": "^2.2.1"
+    "assemblyscript": "0.17.8",
+    "benchmark": "2.1.4",
+    "onchange": "7.1.0",
+    "static-server": "2.2.1"
   }
 }
