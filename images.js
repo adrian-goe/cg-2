@@ -54,7 +54,7 @@ async function setupAsTransforms(ctx, imageData) {
 
     const {instance} = module;
     if (!mem) {
-        mem = new Uint8ClampedArray(memory.buffer);
+        mem = new Uint8Array(memory.buffer);
     }
     Object.assign(as, {
         grayscale: as_transform("grayscale", imageData, ctx, instance),
@@ -62,9 +62,10 @@ async function setupAsTransforms(ctx, imageData) {
     });
 }
 
-function updateProcessedImage(byteSize) {
+function updateProcessedImage(instance, byteSize) {
     const processedImage = document.getElementById('processedImage')
     const result = processedImage.getContext("2d").getImageData(0, 0, width, height)
+    mem = new Uint8Array(instance.exports.memory.buffer)
     result.data.set(mem.subarray(byteSize, 2 * byteSize));
     processedImage.getContext("2d").putImageData(result, 0, 0);
 }
@@ -93,7 +94,7 @@ function as_transform(fn, imageData, ctx, instance) {
                 break
         }
         logTime(`${fn}`, time);
-        updateProcessedImage(byteSize);
+        updateProcessedImage(instance, byteSize);
     }
 }
 
@@ -106,4 +107,5 @@ const slider = document.getElementById("crossRange");
 const output = document.getElementById("crossRangeValue");
 slider.oninput = function () {
     output.innerHTML = this.value;
+    as.cross();
 }

@@ -8,11 +8,11 @@ export namespace Util {
 
     export const COLOR_WIDTH = 4;
 
-    export function fill(writeIndex: i32, color: Color): i32 {
-        store<u8>(writeIndex, color.r);
-        store<u8>(writeIndex + 1, color.g);
-        store<u8>(writeIndex + 2, color.b);
-        store<u8>(writeIndex + 3, color.a);
+    export function fill(writeIndex: i32, r: i32, g: i32, b: i32, a: i32): i32 {
+        store<u8>(writeIndex, r);
+        store<u8>(writeIndex + 1, g);
+        store<u8>(writeIndex + 2, b);
+        store<u8>(writeIndex + 3, a);
         return 0;
     }
 
