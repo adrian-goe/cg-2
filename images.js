@@ -46,7 +46,7 @@ async function setupAsTransforms(ctx, imageData) {
         env: {memory, abort: () => console.log("Abort!")}
     };
     let module;
-    module = await fetch('./build/untouched.wasm').then(response =>
+    module = await fetch('./optimized.wasm').then(response =>
         response.arrayBuffer()
     ).then(bytes =>
         WebAssembly.instantiate(bytes, importObject)
