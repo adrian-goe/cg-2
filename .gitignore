@@ -24,4 +24,5 @@ bin-release/
 .idea/
 .build/
 build/
+dist/
 node_modules/
