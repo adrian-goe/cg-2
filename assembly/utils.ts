@@ -5,7 +5,6 @@ export class Color {
 
 export namespace Util {
 
-
     export const COLOR_WIDTH = 4;
 
     export function fill(writeIndex: i32, r: i32, g: i32, b: i32, a: i32): i32 {
