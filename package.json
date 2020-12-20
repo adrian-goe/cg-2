@@ -27,7 +27,7 @@
     "@assemblyscript/loader": "0.17.8"
   },
   "devDependencies": {
-    "assemblyscript": "0.17.8",
+    "assemblyscript": "0.17.11",
     "onchange": "7.1.0",
     "static-server": "2.2.1",
     "benchmark": "2.1.4"
