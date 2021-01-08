@@ -29,6 +29,10 @@ jobs:
       - name: npm ci and npm run build
         run: |
           npm ci
+          mkdir -p dist/css/
+          mkdir -p dist/js/
+          mkdir -p dist/wasam/
+          mkdir -p dist/assets/
           npm run deploy
       - uses: jakejarvis/s3-sync-action@master
         with:
