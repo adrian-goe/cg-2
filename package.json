@@ -7,12 +7,16 @@
     "test": "node tests",
     "asbuild:untouched": "asc assembly/index.ts -b src/wasam/untouched.wasm -t src/wasam/untouched.wat --sourceMap --debug --runtime none --importMemory",
     "asbuild:optimized": "asc assembly/index.ts -b src/wasam/optimized.wasm -t src/wasam/optimized.wat --optimize  --runtime none --importMemory",
+    "asbuild:untouched-prod": "NODE_ENV=production asc assembly/index.ts -b dist/wasam/untouched.wasm -t dist/wasam/untouched.wat --sourceMap --debug --runtime none --importMemory",
+    "asbuild:optimized-prod": "NODE_ENV=production asc assembly/index.ts -b dist/wasam/optimized.wasm -t dist/wasam/optimized.wat --optimize  --runtime none --importMemory",
     "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized",
+    "asbuild:prod": "NODE_ENV=production npm run asbuild:untouched && npm run asbuild:optimized",
     "build": "npm run asbuild",
     "asbuild:watch": "onchange -i 'assembly/**/*' -- npm run asbuild",
     "serve-demo": "static-server",
-    "deploy": "npm run asbuild:optimized && NODE_ENV=production npm run postcss && cp src/*.html dist/ && cp src/js/*.js dist/js/ && cp src/css/styles.min.css dist/css/ && cp src/assets/*.png dist/assets/ && cp src/wasam/*.{wat,wasm} dist/wasam/",
+    "deploy": "npm run asbuild:optimized-prod && npm run postcss:prod && cp src/*.html dist/ && cp src/js/*.js dist/js/ && cp src/assets/*.png dist/assets/",
     "postcss": "postcss src/css/styles.css -o src/css/styles.min.css",
+    "postcss:prod": "NODE_ENV=production postcss src/css/styles.css -o dist/css/styles.min.css",
     "postcss:watch": "postcss src/css/styles.css -o src/styles.css -w src/**/*.html"
   },
   "repository": {
