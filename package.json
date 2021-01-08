@@ -11,7 +11,7 @@
     "build": "npm run asbuild",
     "asbuild:watch": "onchange -i 'assembly/**/*' -- npm run asbuild",
     "serve-demo": "static-server",
-    "deploy": "npm run asbuild:optimized && NODE_ENV=production npm run postcss && cp src/*.html dist/ && cp src/js/*.js dist/js/ && cp src/css/styles.min.css dist/css/ && cp src/assets/*.png dist/assets/ && cp src/wasam/*.wat dist/wasam/",
+    "deploy": "npm run asbuild:optimized && NODE_ENV=production npm run postcss && cp src/*.html dist/ && cp src/js/*.js dist/js/ && cp src/css/styles.min.css dist/css/ && cp src/assets/*.png dist/assets/ && cp src/wasam/*.{wat,wasm} dist/wasam/",
     "postcss": "postcss src/css/styles.css -o src/css/styles.min.css",
     "postcss:watch": "postcss src/css/styles.css -o src/styles.css -w src/**/*.html"
   },
