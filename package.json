@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "node tests",
-    "asbuild:untouched": "asc assembly/index.ts -b dist/assets/untouched.wasm -t dist/assets/untouched.wat --sourceMap --debug --runtime none --importMemory",
-    "asbuild:optimized": "asc assembly/index.ts -b dist/assets/optimized.wasm -t dist/assets/optimized.wat --optimize  --runtime none --importMemory",
+    "asbuild:untouched": "asc assembly/index.ts -b src/wasam/untouched.wasm -t src/wasam/untouched.wat --sourceMap --debug --runtime none --importMemory",
+    "asbuild:optimized": "asc assembly/index.ts -b src/wasam/optimized.wasm -t src/wasam/optimized.wat --optimize  --runtime none --importMemory",
     "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized",
     "build": "npm run asbuild",
     "asbuild:watch": "onchange -i 'assembly/**/*' -- npm run asbuild",
     "serve-demo": "static-server",
-    "deploy": "npm run asbuild:optimized  && cp index.html dist/ && cp images.js dist/ && cp style.css dist/ && cp assets/test-image.png dist/assets/"
+    "deploy": "npm run asbuild:optimized && NODE_ENV=production npm run postcss && cp src/*.html dist/ && cp src/js/*.js dist/js/ && cp src/css/styles.min.css dist/css/ && cp src/assets/*.png dist/assets/ && cp src/wasam/*.wat dist/wasam/",
+    "postcss": "postcss src/css/styles.css -o src/css/styles.min.css",
+    "postcss:watch": "postcss src/css/styles.css -o src/styles.css -w src/**/*.html"
   },
   "repository": {
     "type": "git",
@@ -24,7 +26,10 @@
   },
   "homepage": "https://adrian-goe.github.io/cg-2",
   "dependencies": {
-    "@assemblyscript/loader": "0.17.13"
+    "@assemblyscript/loader": "0.17.13",
+    "autoprefixer": "^10.2.1",
+    "postcss-cli": "^8.3.1",
+    "tailwindcss": "^2.0.2"
   },
   "devDependencies": {
     "assemblyscript": "0.17.13",

@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>AssemblyScript demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.min.css">
+</head>
+<body>
+<div class="max:w-screen max:h-screen">
+
+    <!--IMAGES-->
+    <div class="w-screen flex justify-around items-center mt-8">
+        <div>
+            <h2 class="text-center text-2xl mb-4">Original</h2>
+            <canvas id="originalImage" width="512" height="512"></canvas>
+        </div>
+        <div>
+            <h2 class="text-center text-2xl mb-4">Processed</h2>
+            <canvas id="processedImage" width="512" height="512"></canvas>
+        </div>
+    </div>
+
+    <!--SPEED-->
+    <div class="w-screen text-center my-4" id="time">&nbsp;</div>
+
+    <!--NAV-->
+    <div class=" flex justify-around items-center border border-b-0 rounded-t mx-8 mt-8">
+        <button onclick="menuClick(this.id)" id="cross" class="ago-nav-button py-2 px-4 hover:bg-primary-50 w-full">Draw
+            Cross
+        </button>
+        <button onclick="menuClick(this.id)" id="grayScale" class="ago-nav-button py-2 px-4 hover:bg-primary-50 w-full ">
+            Grayscale
+        </button>
+    </div>
+    <!--SETTINGS-->
+    <div class="mx-8 border rounded-b border-t-0 py-8 px-2 flex flex-col">
+        <div id="cross-settings" class="ago-nav-panel mb-8">
+
+            <div class=" flex justify-around items-center">
+                <div class="ago-left w-full px-6">
+                    <div class="flex justify-between items-center">
+                        <label class="w-56 block" for="crossRange">Cross Width: <span
+                                id="crossRangeValue">2</span>px</label>
+                        <input type="range" min="2" max="512" value="2" class="w-full" id="crossRange">
+                    </div>
+                </div>
+                <div class="ago-right w-full px-6">
+                    <div class="flex justify-between items-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full flex justify-around">
+            <button id="cross-button" class="px-4 py-2 bg-primary-500 text-white rounded ago-process-button"
+                    onclick="as.cross()">Draw Cross
+            </button>
+            <button id="grayScale-button" class="px-4 py-2 bg-primary-500 text-white rounded ago-process-button"
+                    onclick="as.grayscale()">Grayscale
+            </button>
+        </div>
+    </div>
+</div>
+<script src="js/navigation.js"></script>
+<script src="js/images.js"></script>
+
+</body>
+</html>
