@@ -30,7 +30,7 @@
   },
   "homepage": "https://adrian-goe.github.io/cg-2",
   "dependencies": {
-    "@assemblyscript/loader": "0.18.3",
+    "@assemblyscript/loader": "0.18.6",
     "autoprefixer": "^10.2.1",
     "postcss-cli": "^8.3.1",
     "tailwindcss": "^2.0.2"
