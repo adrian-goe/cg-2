@@ -58,6 +58,9 @@ async function setupAsTransforms(ctx, imageData) {
     }
     Object.assign(as, {
         grayscale: as_transform("grayscale", imageData, ctx, instance),
+        grayscaleSixBit: as_transform("grayscaleSixBit", imageData, ctx, instance),
+        grayscaleFourBit: as_transform("grayscaleFourBit", imageData, ctx, instance),
+        grayscaleTwoBit: as_transform("grayscaleTwoBit", imageData, ctx, instance),
         cross: as_transform("cross", imageData, ctx, instance),
     });
 }
@@ -84,6 +87,15 @@ function as_transform(fn, imageData, ctx, instance) {
 
         switch (fn) {
             case 'grayscale':
+                instance.exports[fn](byteSize, ...args);
+                break;
+            case 'grayscaleSixBit':
+                instance.exports[fn](byteSize, ...args);
+                break;
+            case 'grayscaleFourBit':
+                instance.exports[fn](byteSize, ...args);
+                break;
+            case 'grayscaleTwoBit':
                 instance.exports[fn](byteSize, ...args);
                 break;
             case 'cross':

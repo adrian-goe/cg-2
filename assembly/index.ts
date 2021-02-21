@@ -9,3 +9,15 @@ export function cross(byteSize: i32, imageWidth: i32, imageHeight: i32, crossWid
 export function grayscale(byteSize: i32): i32 {
     return Varianz.grayscale(byteSize);
 }
+
+export function grayscaleSixBit(byteSize: i32): i32 {
+    return Varianz.grayscale(byteSize, 8);
+}
+
+export function grayscaleFourBit(byteSize: i32): i32 {
+    return Varianz.grayscale(byteSize, 16);
+}
+
+export function grayscaleTwoBit(byteSize: i32): i32 {
+    return Varianz.grayscale(byteSize, 32);
+}

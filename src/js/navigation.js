@@ -20,13 +20,15 @@ function hide() {
 function show(id) {
     const panel = document.getElementById(`${id}-settings`);
     const button = document.getElementById(`${id}-button`);
+    console.log(panel)
     if (!!panel) {
         panel.style.display = "block";
     }
     if (!!button) {
         button.style.display = "block";
     }
+    console.log(panel)
 
 }
 
-menuClick('cross')
+menuClick('pointOperations')

@@ -29,8 +29,13 @@
         <button onclick="menuClick(this.id)" id="cross" class="ago-nav-button py-2 px-4 hover:bg-primary-50 w-full">Draw
             Cross
         </button>
-        <button onclick="menuClick(this.id)" id="grayScale" class="ago-nav-button py-2 px-4 hover:bg-primary-50 w-full ">
+        <button onclick="menuClick(this.id)" id="grayScale"
+                class="ago-nav-button py-2 px-4 hover:bg-primary-50 w-full ">
             Grayscale
+        </button>
+        <button onclick="menuClick(this.id)" id="pointOperations"
+                class="ago-nav-button py-2 px-4 hover:bg-primary-50 w-full ">
+            Image properties and point operations
         </button>
     </div>
     <!--SETTINGS-->
@@ -51,12 +56,33 @@
                 </div>
             </div>
         </div>
+
+        <div id="pointOperations-settings" class="ago-nav-panel mb-8">
+            <div class=" flex justify-around items-start">
+                <button class="px-4 py-2 bg-primary-500 text-white rounded"
+                        onclick="as.grayscale()">8 Bit
+                </button>
+                <button class="px-4 py-2 bg-primary-500 text-white rounded"
+                        onclick="as.grayscaleSixBit()">6 Bit
+                </button>
+                <button class="px-4 py-2 bg-primary-500 text-white rounded"
+                        onclick="as.grayscaleFourBit()">4 Bit
+                </button>
+                <button class="px-4 py-2 bg-primary-500 text-white rounded"
+                        onclick="as.grayscaleTwoBit()">2 Bit
+                </button>
+            </div>
+        </div>
         <div class="w-full flex justify-around">
             <button id="cross-button" class="px-4 py-2 bg-primary-500 text-white rounded ago-process-button"
                     onclick="as.cross()">Draw Cross
             </button>
             <button id="grayScale-button" class="px-4 py-2 bg-primary-500 text-white rounded ago-process-button"
                     onclick="as.grayscale()">Grayscale
+            </button>
+            <button id="pointOperations-button"
+                    class="px-4 py-2 bg-primary-500 text-white rounded ago-process-button"
+                    onclick="as.grayscaleTwoBit()">Image properties and point operations
             </button>
         </div>
     </div>
