@@ -32,7 +32,7 @@
   "dependencies": {
     "@assemblyscript/loader": "0.18.8",
     "autoprefixer": "^10.2.1",
-    "postcss-cli": "^8.3.1",
+    "postcss-cli": "^9.0.0",
     "tailwindcss": "^2.0.2"
   },
   "devDependencies": {
