@@ -36,7 +36,7 @@
     "tailwindcss": "^2.0.2"
   },
   "devDependencies": {
-    "assemblyscript": "0.18.8",
+    "assemblyscript": "0.27.25",
     "onchange": "7.1.0",
     "static-server": "2.2.1",
     "benchmark": "2.1.4"
